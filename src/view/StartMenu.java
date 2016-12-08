@@ -39,7 +39,7 @@ public class StartMenu extends JPanel{
 
 	public StartMenu(JFrame aframe){
 		this.frame = aframe;
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setLayout(new FlowLayout());
 		frame.setSize((int) (FRAMEWIDTH), (int) (FRAMEHEIGHT));
 		try{
 			Image p = ImageIO.read(new File("images/play.png"));
@@ -51,17 +51,17 @@ public class StartMenu extends JPanel{
 		} catch (Exception ex){
 			System.out.println(ex);
 		}
-		play.setBackground(null);
-		//play.setAlignmentX(Component.LEFT_ALIGNMENT);
-		//play.setAlignmentX(Component.LEFT_ALIGNMENT);
-		help.setBackground(null);
-		//help.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		setAlignmentX(Component.BOTTOM_ALIGNMENT);
-		tutorial.setBackground(null);
-		//tutorial.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		add("Play", play);
-		add("Help", help);
-		add("Tutorial", tutorial);
+		setLayout(new BorderLayout());
+		JPanel buttonPanel = new JPanel();buttonPanel.add(play);
+		play.setOpaque(false);
+		help.setOpaque(false);
+		tutorial.setOpaque(false);
+		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		buttonPanel.add(play);
+		buttonPanel.add(help);
+		buttonPanel.add(tutorial);
+		buttonPanel.setOpaque(false);
+		add(buttonPanel,BorderLayout.SOUTH);
 		setBackground(null);
 		StartMenu sm = this;
 		tutorial.addMouseListener(new MouseListener(){
@@ -130,6 +130,7 @@ public class StartMenu extends JPanel{
 			@Override
 			public void mouseReleased(MouseEvent arg0) {}
 		});
+		frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 	}
 	protected void paintComponent(Graphics g) {
         super.paintComponent(g);
