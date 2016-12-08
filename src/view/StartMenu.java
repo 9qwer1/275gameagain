@@ -17,6 +17,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+
 import javax.swing.Timer;
 
 import javax.imageio.ImageIO;
@@ -42,19 +44,25 @@ public class StartMenu extends JPanel{
 		try{
 			Image p = ImageIO.read(new File("images/play.png"));
 			Image h = ImageIO.read(new File("images/help.png"));
+			Image t = ImageIO.read(new File("images/tutorial_button.png"));
 			play.setIcon(new ImageIcon(p));
 			help.setIcon(new ImageIcon(h));
+			tutorial.setIcon(new ImageIcon(t));
 		} catch (Exception ex){
 			System.out.println(ex);
 		}
 		play.setBackground(null);
-		play.setAlignmentX(Component.CENTER_ALIGNMENT);
+		//play.setAlignmentX(Component.LEFT_ALIGNMENT);
+		//play.setAlignmentX(Component.LEFT_ALIGNMENT);
 		help.setBackground(null);
-		help.setAlignmentX(Component.CENTER_ALIGNMENT);
+		//help.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		setAlignmentX(Component.BOTTOM_ALIGNMENT);
+		tutorial.setBackground(null);
+		//tutorial.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		add("Play", play);
 		add("Help", help);
 		add("Tutorial", tutorial);
-		setBackground(Color.BLUE);
+		setBackground(null);
 		StartMenu sm = this;
 		tutorial.addMouseListener(new MouseListener(){
 			@Override
@@ -123,4 +131,14 @@ public class StartMenu extends JPanel{
 			public void mouseReleased(MouseEvent arg0) {}
 		});
 	}
+	protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        BufferedImage backg = null;
+        try {
+			backg = ImageIO.read(new File("Images/titlepage.jpg"));
+		} catch (IOException e) {
+			System.out.println(e);
+		}
+        g.drawImage(backg, 0, 0, getWidth(), getHeight(), this);
+    }
 }

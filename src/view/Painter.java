@@ -176,6 +176,7 @@ public class Painter extends JPanel{
 			else if (ph.getHazardsList().get(3).getXpos()>0&&ph.getHazardsList().get(3).getXpos()<=FRAMEWIDTH){
 				g2d.drawString("Collect these for special abilities!", (int) (FRAMEWIDTH / 2.5), FRAMEHEIGHT / 2);
 			}
+			//test
 			BufferedImage image;
 			for (int i = 0; i < xpos.size(); i++) {
 				if(images!=null){
@@ -244,7 +245,7 @@ public class Painter extends JPanel{
 		String scorestring = "Points: ";
 		String levelstring = "Level: ";
 		String windstring = "";
-		saltstring = saltstring + salinity;
+		saltstring = saltstring + salinity/10;
 		scorestring = scorestring + score;
 		levelstring = levelstring + level;
 		windstring = windstring + wind;

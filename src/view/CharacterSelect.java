@@ -85,9 +85,12 @@
 					frame.add(gw);
 					frame.add(gw.control);
 					frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+					gw.control.getGame().getPlayer().setSalmin(200); 
+					gw.control.getGame().getPlayer().setSalmax(800);
+	                gw.control.getGame().getPlayer().setSalinity(gw.control.getGame().getPlayer().getSalmin()+((gw.control.getGame().getPlayer().getSalmax()-gw.control.getGame().getPlayer().getSalmin())/2));
 					ActionListener taskPerformer = new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
-							if (gw.control.getGame().getLevel()==3){
+							if (gw.control.getGame().getLevel()==6){
 								frame.remove(gw.control);
 								frame.remove(gw);
 								Party p = new Party(frame);
@@ -95,7 +98,7 @@
 								frame.setSize(gw.control.FRAMEWIDTH , gw.control.FRAMEHEIGHT );
 								p.setFrame(frame);
 							}
-							if (gw.control.getGame().isGameOver() == true){
+							if (gw.control.getGame().isGameOver()){
 								frame.remove(gw);
 								frame.remove(gw.control);
 								Death d = new Death(frame);
@@ -128,6 +131,9 @@
 					frame.add(gw);
 					frame.add(gw.control);
 					frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+					gw.control.getGame().getPlayer().setSalmin(300); gw.control.getGame().getPlayer().setSalmax(700);
+                    gw.control.getGame().getPlayer().setSalinity(gw.control.getGame().getPlayer().getSalmin()+
+                    		((gw.control.getGame().getPlayer().getSalmax()-gw.control.getGame().getPlayer().getSalmin())/2));
 					ActionListener taskPerformer = new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
 							if (gw.control.getGame().getLevel()==3){
@@ -190,6 +196,9 @@
 					frame.add(gw);
 					frame.add(gw.control);
 					frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+					gw.control.getGame().getPlayer().setSalmin(100); gw.control.getGame().getPlayer().setSalmax(1000);
+                    gw.control.getGame().getPlayer().setSalinity(gw.control.getGame().getPlayer().getSalmin()+((gw.control.getGame().getPlayer().getSalmax()-gw.control.getGame().getPlayer().getSalmin())/2)
+);
 					ActionListener taskPerformer = new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
 							if (gw.control.getGame().getLevel()==3){
