@@ -54,9 +54,9 @@
 			horseshoe.setBackground(null);
 			oyster.setBackground(null);
 			back.setBackground(null);
-			add("BlueCrab", blue);
-			add("HorseShoe", horseshoe);
 			add("Oyster", oyster);
+			add("HorseShoe", horseshoe);
+			add("BlueCrab", blue);
 			add("Back", back);
 			CharacterSelect cs = this;
 			back.addMouseListener(new MouseListener(){
@@ -85,18 +85,21 @@
 					frame.add(gw);
 					frame.add(gw.control);
 					frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-					gw.control.getGame().getPlayer().setSalmin(200); 
-					gw.control.getGame().getPlayer().setSalmax(800);
+					gw.control.getGame().getPlayer().setSalinity(275);
+					gw.control.getGame().getPlayer().setSalmin(50); 
+					gw.control.getGame().getPlayer().setSalmax(500);
 	                gw.control.getGame().getPlayer().setSalinity(gw.control.getGame().getPlayer().getSalmin()+((gw.control.getGame().getPlayer().getSalmax()-gw.control.getGame().getPlayer().getSalmin())/2));
 					ActionListener taskPerformer = new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
 							if (gw.control.getGame().getLevel()==6){
-								frame.remove(gw.control);
 								frame.remove(gw);
+								frame.remove(gw.control);
+								gw.control = null;
 								Party p = new Party(frame);
 								frame.add(p);
 								frame.setSize(gw.control.FRAMEWIDTH , gw.control.FRAMEHEIGHT );
 								p.setFrame(frame);
+								frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 							}
 							if (gw.control.getGame().isGameOver()){
 								frame.remove(gw);
@@ -131,19 +134,22 @@
 					frame.add(gw);
 					frame.add(gw.control);
 					frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-					gw.control.getGame().getPlayer().setSalmin(300); gw.control.getGame().getPlayer().setSalmax(700);
+					gw.control.getGame().getPlayer().setSalinity(325);
+					gw.control.getGame().getPlayer().setSalmin(50); 
+					gw.control.getGame().getPlayer().setSalmax(600);
                     gw.control.getGame().getPlayer().setSalinity(gw.control.getGame().getPlayer().getSalmin()+
                     		((gw.control.getGame().getPlayer().getSalmax()-gw.control.getGame().getPlayer().getSalmin())/2));
 					ActionListener taskPerformer = new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
-							if (gw.control.getGame().getLevel()==3){
-								frame.remove(gw.control);
+							if (gw.control.getGame().getLevel()==6){
 								frame.remove(gw);
+								frame.remove(gw.control);
+								gw.control = null;
 								Party p = new Party(frame);
 								frame.add(p);
 								frame.setSize(gw.control.FRAMEWIDTH , gw.control.FRAMEHEIGHT );
 								p.setFrame(frame);
-								
+								frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 							}
 							if (gw.control.getGame().isGameOver()){
 								frame.remove(gw);
@@ -189,26 +195,29 @@
 			oyster.addMouseListener(new MouseListener(){
 				@Override
 				public void mouseClicked(MouseEvent event) {
-					System.out.println("Registering mouse click");
+					//System.out.println("Registering mouse click");
 					GameWindow gw = new GameWindow("oyster");
 					gw.setFrame(frame);
 					currentFrame.setVisible(false);
 					frame.add(gw);
 					frame.add(gw.control);
 					frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-					gw.control.getGame().getPlayer().setSalmin(100); gw.control.getGame().getPlayer().setSalmax(1000);
+					gw.control.getGame().getPlayer().setSalinity(425);
+					gw.control.getGame().getPlayer().setSalmin(50); 
+					gw.control.getGame().getPlayer().setSalmax(800);
                     gw.control.getGame().getPlayer().setSalinity(gw.control.getGame().getPlayer().getSalmin()+((gw.control.getGame().getPlayer().getSalmax()-gw.control.getGame().getPlayer().getSalmin())/2)
 );
 					ActionListener taskPerformer = new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
-							if (gw.control.getGame().getLevel()==3){
-							frame.remove(gw.control);
-							frame.remove(gw);
-							Party p = new Party(frame);
-							frame.add(p);
-							frame.setSize(gw.control.FRAMEWIDTH , gw.control.FRAMEHEIGHT );
-							p.setFrame(frame);
-							
+							if (gw.control.getGame().getLevel()==6){
+								frame.remove(gw);
+								frame.remove(gw.control);
+								gw.control = null;
+								Party p = new Party(frame);
+								frame.add(p);
+								frame.setSize(gw.control.FRAMEWIDTH , gw.control.FRAMEHEIGHT );
+								p.setFrame(frame);
+								frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 						}
 						if (gw.control.getGame().isGameOver() == true){
 							frame.remove(gw);

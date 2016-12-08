@@ -30,7 +30,6 @@ public class GameWindow extends JPanel {
 	
 	public GameWindow(String imageName, boolean tutorial){
 		if (tutorial){
-			System.out.println("Appropriate Tutorial");
 			setLayout(new FlowLayout());
 			control = new Controller(imageName,true);
 		}

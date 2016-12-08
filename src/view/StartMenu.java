@@ -67,15 +67,25 @@ public class StartMenu extends JPanel{
 		tutorial.addMouseListener(new MouseListener(){
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				GameWindow gw = new GameWindow("bluecrab_0",true);
+				GameWindow gw = new GameWindow("blue_crab",true);
 				gw.setFrame(frame);
 				frame.setSize(FRAMEWIDTH, FRAMEHEIGHT);
 				frame.remove(sm);
 				frame.add(gw);
 				frame.add(gw.control);
+				frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 				ActionListener taskPerformer = new ActionListener() {
 					public void actionPerformed(ActionEvent evt) {
 						gw.control.update();
+						if(gw.control.getGame().isGameOver()){
+							frame.remove(gw);
+							frame.remove(gw.control);
+							gw.control = null;
+							StartMenu sm = new StartMenu(frame);
+							frame.add(sm);
+							frame.setSize(gw.control.FRAMEWIDTH , gw.control.FRAMEHEIGHT );
+							frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+						}
 					}
 				};
 				Timer timer = new Timer(25, taskPerformer);

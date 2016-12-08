@@ -40,10 +40,9 @@ public class Game implements Serializable{
 	int powerupCount = 0;
 	int count = 0;
 	boolean isTutorial = false;
+	
 	public Game(Dimension screenSize,String imageName, boolean tutorial){
 		if (tutorial){
-			System.out.println("Appropriate Tutorial");
-			System.out.println("Generating game");
 			player = new Player(30, 40, 10, 10, 500, 1, 1, 1000, Tool.TRASH, State.NEUTRAL, imageName);
 			board = new Board();
 			hazardnum = 75;
@@ -55,6 +54,8 @@ public class Game implements Serializable{
 	        level = 1;
 	        ph.generateHazardsTutorial(screenSize);
 	        this.isTutorial = tutorial;
+	        this.name = player.getImageType();
+	        name = name.replace(".png", "");
 		}
 	}
 	/**
@@ -105,7 +106,7 @@ public class Game implements Serializable{
 	public void levelUp(){
 		level++;
 		hazardnum = hazardnum+10;
-		points=points+100;
+		points=points+10;
 	}
 	/**
 	 * Sets possible hazards attribute to given PossibleHazards
@@ -389,23 +390,29 @@ public class Game implements Serializable{
 				hazardr = getPossibleHazards().getHazardsList().get(i).getBounds();
 				collided = getPossibleHazards().getHazardsList().get(i);
 				if (playerr.intersects(hazardr)) {
-					if (collided.getType().equals(HazardType.POWERUP)) {
-						getPossibleHazards().removeHazard(i);
-						if (collided.getPowerupType().equals(PowerupType.INVINCIBLE)) {
-							getPlayer().Invincibility();
-						} else if (collided.getPowerupType().equals(PowerupType.CLEAR)) {
-							getPossibleHazards().clearEnemies(SCREENSIZE);
-						} else if (collided.getPowerupType().equals(PowerupType.SPEED)) {
-							getPlayer().SpeedUp();
-						} else if (collided.getPowerupType().equals(PowerupType.ADDLIFE)) {
-							getPlayer().gainLife();
-						}
-					} else {
-						if (getPlayer().getState().equals(State.INVINCIBLE)) {
-							if (collided.getypos() > getPlayer().getYpos()) {
-								collided.setMovementType(MovementType.COLLIDEDDOWN);
-							} else if (collided.getypos() <= getPlayer().getYpos()) {
-								collided.setMovementType(MovementType.COLLIDEDUP);
+					 if (collided.getType().equals(HazardType.POWERUP)) {  
+                         getPossibleHazards().removeHazard(i);
+                         if (collided.getPowerupType().equals(PowerupType.INVINCIBLE)) {
+                             getPlayer().Invincibility();
+                             getPoint();
+                         } else if (collided.getPowerupType().equals(PowerupType.CLEAR)) {
+                             getPossibleHazards().clearEnemies(SCREENSIZE);
+                             getPoint();
+                         } else if (collided.getPowerupType().equals(PowerupType.SPEED)) {
+                             getPlayer().SpeedUp();
+                             getPoint();
+                         } else if (collided.getPowerupType().equals(PowerupType.ADDLIFE)) {
+                             getPlayer().setLife(getPlayer().getLife() + 1);
+                         }
+                     } else {
+                         if (getPlayer().getState().equals(State.INVINCIBLE)) {
+                             if (collided.getType().equals(HazardType.TRASH)){
+                                 getPossibleHazards().removeHazard(i);
+                                 getPoint();}
+                             if (collided.getypos() > getPlayer().getYpos()) {
+                             collided.setMovementType(MovementType.COLLIDEDDOWN);}
+                              else if (collided.getypos() <= getPlayer().getYpos()) {
+                                 collided.setMovementType(MovementType.COLLIDEDUP);
 							}
 						} else if (collided.getType().equals(HazardType.TRASH)) {
 							if (getPlayer().getTool().equals(collided.getToolType())) {

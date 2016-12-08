@@ -46,15 +46,22 @@ public class PossibleHazards {
 		int FRAMEWIDTH = (int) screenSize.getWidth();
 		int spawnInt;
 		int vel = FRAMEWIDTH/100;
-		hazards.add(new Trash(FRAMEWIDTH, FRAMEHEIGHT/4, 10, 0, 25, Tool.TRASH));
-		hazards.add(new Trash(FRAMEWIDTH, FRAMEHEIGHT/2, 10, 0, 225, Tool.RECYCLE));
-		hazards.add(new Enemy1(FRAMEWIDTH, FRAMEHEIGHT/3, 7, 0, FRAMEHEIGHT, 375));
-		hazards.add(new Enemy2(FRAMEWIDTH, FRAMEHEIGHT/2, 7, 0, 375));
-		hazards.add(new Powerup(FRAMEWIDTH, FRAMEHEIGHT/2, 7, 0, 575, PowerupType.ADDLIFE));
-		hazards.add(new Powerup(FRAMEWIDTH, FRAMEHEIGHT/2 + FRAMEHEIGHT/4, 7, 0, 575, PowerupType.CLEAR));
-		hazards.add(new Powerup(FRAMEWIDTH, FRAMEHEIGHT/2 - 15, 7, 0, 575, PowerupType.INVINCIBLE));
-		hazards.add(new Powerup(FRAMEWIDTH, FRAMEHEIGHT/2 + 30, 7, 0, 575, PowerupType.SPEED));
-		System.out.print(hazards);
+		hazards.add(new Enemy2(FRAMEWIDTH, FRAMEHEIGHT/2+FRAMEHEIGHT/5, -5, 0, 25));
+		hazards.get(0).setMovementType(MovementType.COLLIDEDDOWN);
+		hazards.add(new Trash(FRAMEWIDTH, FRAMEHEIGHT/4, 5, 0, 300, Tool.TRASH));
+		hazards.add(new Trash(FRAMEWIDTH, FRAMEHEIGHT/2, 5, 0, 600, Tool.RECYCLE));
+		hazards.add(new Enemy1(FRAMEWIDTH, FRAMEHEIGHT/3, 5, 0, FRAMEHEIGHT, 900));
+		hazards.add(new Enemy2(FRAMEWIDTH, FRAMEHEIGHT/2, 5, 3, 1200));
+		hazards.add(new Enemy3(FRAMEWIDTH, FRAMEHEIGHT/2, 5, 0, 1500));		
+		hazards.add(new Powerup(FRAMEWIDTH, FRAMEHEIGHT/2, 5, 0, 1800, PowerupType.ADDLIFE));
+		hazards.add(new Powerup(FRAMEWIDTH, FRAMEHEIGHT/2 + FRAMEHEIGHT/4, 5, 0, 2100, PowerupType.SPEED));
+		hazards.add(new Powerup(FRAMEWIDTH, FRAMEHEIGHT/2 - 15, 5, 0, 2400, PowerupType.CLEAR));
+		hazards.add(new Powerup(FRAMEWIDTH, FRAMEHEIGHT/2 + 30, 5, 0, 2700, PowerupType.INVINCIBLE));
+		hazards.add(new Enemy2(FRAMEWIDTH, FRAMEHEIGHT/2+FRAMEHEIGHT/5, -5, 0, 3000));		
+		hazards.get(10).setMovementType(MovementType.COLLIDEDDOWN);
+		hazards.add(new Enemy2(FRAMEWIDTH, FRAMEHEIGHT/2+FRAMEHEIGHT/5, -5, 0, 3300));
+		hazards.get(11).setMovementType(MovementType.COLLIDEDDOWN);
+		//System.out.print(hazards);
 }
 	/**
 	 * This method generates hazards based on which level it is

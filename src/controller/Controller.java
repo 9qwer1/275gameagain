@@ -76,7 +76,6 @@ public class Controller extends JPanel implements KeyListener {
 		right = false;
 	}
 	public Controller(String imageName,boolean tutorial) {
-		System.out.println("Appropriate Tutorial");
 		game = new Game(SCREENSIZE, imageName, true);
 		painter = new Painter();
 		count = 0;
@@ -101,13 +100,6 @@ public class Controller extends JPanel implements KeyListener {
 		right = false;
 	}
 
-	protected void bindKeyWith(String name, KeyStroke keyStroke, Action action) {
-		InputMap im = getInputMap(WHEN_IN_FOCUSED_WINDOW);
-		ActionMap am = getActionMap();
-		im.put(keyStroke, name);
-		am.put(name, action);
-	}
-
 	@Override
 	public void paint(Graphics g) {
 		if (isTutorial){
@@ -118,124 +110,16 @@ public class Controller extends JPanel implements KeyListener {
 		}
 	}
 
-	public void onCollision() {
-		Rectangle playerr = game.getPlayer().getBounds();
-		Rectangle hazardr;
-		Hazard collided;
-		if (game.getPlayer().getState().equals(State.JUSTHIT)) {
-
-		} else {
-			for (int i = 0; i < game.getPossibleHazards().getHazardsList().size(); i++) {
-				hazardr = game.getPossibleHazards().getHazardsList().get(i).getBounds();
-				collided = game.getPossibleHazards().getHazardsList().get(i);
-				if (playerr.intersects(hazardr)) {
-					if (collided.getType().equals(HazardType.POWERUP)) {
-						game.getPossibleHazards().removeHazard(i);
-						if (collided.getPowerupType().equals(PowerupType.INVINCIBLE)) {
-							game.getPlayer().Invincibility();
-						} else if (collided.getPowerupType().equals(PowerupType.CLEAR)) {
-							game.getPossibleHazards().clearEnemies(SCREENSIZE);
-						} else if (collided.getPowerupType().equals(PowerupType.SPEED)) {
-							game.getPlayer().SpeedUp();
-						} else if (collided.getPowerupType().equals(PowerupType.ADDLIFE)) {
-							game.getPlayer().setLife(game.getPlayer().getLife() + 1);
-						}
-					} else {
-						if (game.getPlayer().getState().equals(State.INVINCIBLE)) {
-							if (collided.getypos() > game.getPlayer().getYpos()) {
-								collided.setMovementType(MovementType.COLLIDEDDOWN);
-							} else if (collided.getypos() <= game.getPlayer().getYpos()) {
-								collided.setMovementType(MovementType.COLLIDEDUP);
-							}
-						} else if (collided.getType().equals(HazardType.TRASH)) {
-							if (game.getPlayer().getTool().equals(collided.getToolType())) {
-								game.getPossibleHazards().removeHazard(i);
-								game.getPoint();
-							} else {
-								game.getPossibleHazards().removeHazard(i);
-								game.getPlayer().LoseLife();
-							}
-						} else {
-							game.getPossibleHazards().removeHazard(i);
-							game.getPlayer().LoseLife();
-						}
-					}
-				}
-			}
-		}
-	}
-
 
 	public void update() {
-		String empty = "empty";
-		String invincible = "invincible_"+name;
-		String speedy = "speedy_"+name;
-		System.out.println(name + " : " +game.getPlayer().getImageType());
-		if (game.getPlayer().getState().equals(State.JUSTHIT)) {
-			powerupCount += 1;
-			if (game.getPlayer().getImageType().replace(".png", "").equals(name))
-				game.getPlayer().setImageType(empty);
-			else
-				game.getPlayer().setImageType(name);
-			if (powerupCount >= 75) {
-				game.getPlayer().setState(State.NEUTRAL);
-				game.getPlayer().setImageType(name);
-				powerupCount = 0;
-			}
-		}
-		if (game.getPlayer().getState().equals(State.INVINCIBLE)) {
-			powerupCount += 1;
-			if (game.getPlayer().getImageType().replace(".png", "").equals(name))
-				game.getPlayer().setImageType(invincible);
-			else
-				game.getPlayer().setImageType(name);
-			if (powerupCount >= 200) {
-				game.getPlayer().setState(State.NEUTRAL);
-				game.getPlayer().setImageType(name);
-				powerupCount = 0;
-			}
-		}
-		if (game.getPlayer().getState().equals(State.SPEEDUP)) {
-			powerupCount += 1;
-			if (game.getPlayer().getImageType().replace(".png", "").equals(name))
-				game.getPlayer().setImageType(speedy);
-			else
-				game.getPlayer().setImageType(name);
-			if (powerupCount == 200) {
-				game.getPlayer().setXvel(10);
-				game.getPlayer().setYvel(10);
-				game.getPlayer().setImageType(name);
-				game.getPlayer().setState(State.NEUTRAL);
-				powerupCount = 0;
-			}
-		}
 		count++;
-		for (int i = 0; i < game.getPossibleHazards().getHazardsList().size(); i++) {
-			if (game.getPossibleHazards().getHazardsList().get(i).getSpawntime() < count) {
-				game.getPossibleHazards().getHazardsList().get(i).move();
-			}
-		}
+		game.update();
 		keyUpdate();
 		painter.updateView(game.makeNames(), game.makeXpos(), game.makeXbounds(), game.makeYbounds(), game.makeYpos(),
 				game.getBoard().getArr(), game.getPlayer().getLife(), game.getLevel(), game.getPlayer().getSalinity(),
 				game.getPoints(), game.getPlayer().getSalmax(), FRAMEWIDTH, FRAMEHEIGHT, game.getWind(), game.getPlayer().getTool(),
 				game.isGameOver());
 		repaint();
-		if (game.isGameOver()){
-			game.stop();
-			
-		}
-		if(count%300 == 0)
-			game.changeWind();
-		if(count%100 == 0)
-			game.handleWind();
-		game.saltOnMovement(SCREENSIZE);
-		onCollision();
-		game.onOffScreen(SCREENSIZE);
-		ArrayList<Hazard> c = game.getPossibleHazards().getHazardsList();
-		if (c.size() == 0) 
-			count=0;
-		game.onNextLevel(SCREENSIZE);
 	}
 
 
